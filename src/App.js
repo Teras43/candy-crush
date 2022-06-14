@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ScoreBoard from "./components/ScoreBoard";
 import blueCandy from "./images/blue-candy.png";
 import greenCandy from "./images/green-candy.png";
@@ -10,7 +10,7 @@ import blankSquare from "./images/blank.png";
 
 /** Width variable dictates the width of the game board (in squares). */
 const width = 8;
-/** Array of all the possible colors for the candy pieces in eaach square. */
+/** Array of all the possible colors for the candy pieces in each square. */
 const candyColors = [
   blueCandy,
   greenCandy,
@@ -31,7 +31,7 @@ const App = () => {
   const [scoreDisplay, setScoreDisplay] = useState(0);
 
   /** Function will theck for a column of four of the same color. */
-  const checkForColumnOfFour = () => {
+  const checkForColumnOfFour = useCallback(() => {
     for (let i = 0; i <= 39; i++) {
       const columnOfFour = [i, i + width, i + width * 2, i + width * 3]; // This puts the column of 4 indexes to check into a single array.
       const decidedColor = currentColorArrangement[i]; // This is the variable that holds the current color we're checking against to see if the other 3 slots are of this color.
@@ -52,10 +52,10 @@ const App = () => {
         return true;
       }
     }
-  };
+  }, [currentColorArrangement]);
 
   /** Function will check for a row of four of the same color. */
-  const checkForRowOfFour = () => {
+  const checkForRowOfFour = useCallback(() => {
     for (let i = 0; i < 64; i++) {
       const rowOfFour = [i, i + 1, i + 2, i + 3]; // Array of 4 square indexes in a row instead of a column.
       const decidedColor = currentColorArrangement[i]; // Current color to check against.
@@ -81,10 +81,10 @@ const App = () => {
         return true;
       }
     }
-  };
+  }, [currentColorArrangement]);
 
   /** Function will check for a column of three of the same color. */
-  const checkForColumnOfThree = () => {
+  const checkForColumnOfThree = useCallback(() => {
     for (let i = 0; i <= 47; i++) {
       const columnOfThree = [i, i + width, i + width * 2]; // Array that holds indexes of three squares to check.
       const decidedColor = currentColorArrangement[i]; // Current color to check against.
@@ -104,10 +104,10 @@ const App = () => {
         return true;
       }
     }
-  };
+  }, [currentColorArrangement]);
 
   /** Function will check for a row of three of the same color. */
-  const checkForRowOfThree = () => {
+  const checkForRowOfThree = useCallback(() => {
     for (let i = 0; i < 64; i++) {
       const rowOfThree = [i, i + 1, i + 2];
       const decidedColor = currentColorArrangement[i];
@@ -132,9 +132,9 @@ const App = () => {
         return true;
       }
     }
-  };
+  }, [currentColorArrangement]);
 
-  const moveIntoSquareBelow = () => {
+  const moveIntoSquareBelow = useCallback(() => {
     for (let i = 0; i <= 55; i++) {
       const firstRowIndexes = [0, 1, 2, 3, 4, 5, 6, 7];
       const isFirstRow = firstRowIndexes.includes(i);
@@ -149,7 +149,7 @@ const App = () => {
         currentColorArrangement[i] = blankSquare;
       }
     }
-  };
+  }, [currentColorArrangement]);
 
   const dragStart = (e) => {
     setSquareBeingDragged(e.target);
@@ -219,7 +219,7 @@ const App = () => {
     createBoard();
   }, []);
 
-  /** Will trigger to check for a column of three that match colors. */
+  /** Will trigger to check for all columns / rows that match colors. */
   useEffect(() => {
     const timer = setInterval(() => {
       checkForColumnOfFour();
@@ -242,22 +242,24 @@ const App = () => {
   return (
     <div className="app">
       <ScoreBoard score={scoreDisplay} />
-      <div className="game">
-        {currentColorArrangement.map((candyColor, index) => (
-          <img
-            key={index}
-            src={candyColor}
-            alt={candyColor}
-            data-id={index}
-            draggable={true}
-            onDragStart={dragStart}
-            onDragOver={(e) => e.preventDefault()}
-            onDragEnter={(e) => e.preventDefault()}
-            onDragLeave={(e) => e.preventDefault()}
-            onDrop={dragDrop}
-            onDragEnd={dragEnd}
-          />
-        ))}
+      <div className="gameBackground">
+        <div className="game">
+          {currentColorArrangement.map((candyColor, index) => (
+            <img
+              key={index}
+              src={candyColor}
+              alt={candyColor}
+              data-id={index}
+              draggable={true}
+              onDragStart={dragStart}
+              onDragOver={(e) => e.preventDefault()}
+              onDragEnter={(e) => e.preventDefault()}
+              onDragLeave={(e) => e.preventDefault()}
+              onDrop={dragDrop}
+              onDragEnd={dragEnd}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

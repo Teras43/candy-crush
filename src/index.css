@@ -2,6 +2,15 @@
   display: flex;
   flex-direction: column;
   padding: 30px;
+  align-items: center;
+}
+
+.gameBackground {
+  height: 560px;
+  background-image: url(./images/ice-cream-bkgd.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 8px;
 }
 
 .game {
@@ -9,9 +18,18 @@
   height: 560px;
   display: flex;
   flex-wrap: wrap;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 0px 3px 3px 0px;
+  background-color: rgb(104, 159, 178, 0.6);
 }
 
 .game img {
   width: 70px;
   height: 70px;
+  box-sizing: border-box;
+  position: relative;
+  border-bottom: 1px solid gray;
+  border-right: 1px solid black;
+  border-radius: 8px;
 }
