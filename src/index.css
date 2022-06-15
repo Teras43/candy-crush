@@ -1,14 +1,26 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .app {
   display: flex;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
   flex-direction: column;
   padding: 30px;
   align-items: center;
+  background-image: url(./images/colorful-background.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .gameBackground {
   height: 560px;
+  box-sizing: border-box;
   background-image: url(./images/ice-cream-bkgd.jpg);
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   border-radius: 8px;
 }
@@ -32,4 +44,16 @@
   border-bottom: 1px solid gray;
   border-right: 1px solid black;
   border-radius: 8px;
+}
+
+.score-board {
+  display: flex;
+  width: 150px;
+  /* position: absolute; */
+  justify-content: center;
+  margin-bottom: 12px;
+  border: 8px solid transparent;
+  background-color: rgb(219, 163, 222, 0.6);
+  border-image: linear-gradient(45deg, rgb(4, 192, 255), rgb(255, 119, 141));
+  border-image-slice: 1;
 }
