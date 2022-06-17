@@ -1,8 +1,19 @@
+import { useEffect } from "react";
+import ConfettiGenerator from "confetti-js";
+
 const GameWin = ({ resetColors, resetScore }) => {
   const restartGame = () => {
     resetColors([]);
     resetScore(0);
   };
+
+  useEffect(() => {
+    const confettiSettings = { target: "my-canvas" };
+    const confetti = new ConfettiGenerator(confettiSettings);
+    confetti.render();
+
+    return () => confetti.clear();
+  }, []);
 
   return (
     <div className="page-mask-on-win">
@@ -12,6 +23,7 @@ const GameWin = ({ resetColors, resetScore }) => {
           Play Again
         </button>
       </div>
+      <canvas id="my-canvas"></canvas>
     </div>
   );
 };
