@@ -8,7 +8,7 @@ const GameWin = ({ resetColors, resetScore }) => {
   };
 
   useEffect(() => {
-    const confettiSettings = { target: "my-canvas" };
+    const confettiSettings = { target: "confetti-canvas" };
     const confetti = new ConfettiGenerator(confettiSettings);
     confetti.render();
 
@@ -23,7 +23,7 @@ const GameWin = ({ resetColors, resetScore }) => {
           Play Again
         </button>
       </div>
-      <canvas id="my-canvas"></canvas>
+      <canvas id="confetti-canvas"></canvas>
     </div>
   );
 };

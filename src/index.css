@@ -103,7 +103,7 @@ body {
   cursor: pointer;
 }
 
-#my-canvas {
+#confetti-canvas {
   position: fixed;
   top: 0;
   left: 0;
