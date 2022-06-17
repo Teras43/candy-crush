@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import ScoreBoard from "./components/ScoreBoard";
+import GameWin from "./components/GameWin";
 import blueCandy from "./images/blue-candy.png";
 import greenCandy from "./images/green-candy.png";
 import orangeCandy from "./images/orange-candy.png";
@@ -261,6 +262,12 @@ const App = () => {
           ))}
         </div>
       </div>
+      {scoreDisplay >= 150 && (
+        <GameWin
+          resetColors={setCurrentColorArrangement}
+          resetScore={setScoreDisplay}
+        />
+      )}
     </div>
   );
 };

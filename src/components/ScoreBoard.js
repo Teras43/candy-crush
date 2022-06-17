@@ -1,8 +1,9 @@
 const ScoreBoard = ({ score }) => {
   return (
     <div className="score-board">
-      <h2 className="candy-crush-title">Candy Crush!</h2>
+      <h1 className="candy-crush-title">Candy Crush!</h1>
       <h2>Score: {score}</h2>
+      <h2 className="goal-tile">Goal: 150</h2>
     </div>
   );
 };
