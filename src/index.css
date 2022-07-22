@@ -19,7 +19,6 @@ body {
 }
 
 .gameBackground {
-  height: 560px;
   box-sizing: border-box;
   background-image: url(./images/ice-cream-bkgd.jpg);
   background-size: cover;
@@ -113,13 +112,19 @@ body {
   z-index: 10;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (min-width: 1001px) {
+  .gameBackground {
+    margin-right: 30px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
   .app {
     flex-direction: column;
   }
 
   .gameBackground {
-    height: 320px;
+    height: 480px;
     margin: 0;
   }
 
@@ -145,5 +150,24 @@ body {
 
   .score-board h2 {
     margin: 0px 0px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .game {
+    display: flex;
+    height: 480px;
+    width: 480px;
+  }
+
+  .game img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .gameBackground {
+    height: 320px;
   }
 }
