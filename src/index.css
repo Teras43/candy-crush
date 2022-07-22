@@ -112,3 +112,38 @@ body {
   height: 100vh;
   z-index: 10;
 }
+
+@media only screen and (max-width: 800px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .gameBackground {
+    height: 320px;
+    margin: 0;
+  }
+
+  .game {
+    display: flex;
+    height: 320px;
+    width: 320px;
+  }
+
+  .game img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .score-board {
+    height: 150px;
+    margin-bottom: 20px;
+  }
+
+  .score-board h1 {
+    margin: 0px 0px;
+  }
+
+  .score-board h2 {
+    margin: 0px 0px;
+  }
+}

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useSwipeable } from "react-swipeable";
 import ScoreBoard from "./components/ScoreBoard";
 import GameWin from "./components/GameWin";
 import blueCandy from "./images/blue-candy.png";
@@ -160,48 +161,64 @@ const App = () => {
     setSquareBeingReplaced(e.target);
   };
 
-  const dragEnd = () => {
-    const squareBeingReplacedId = parseInt(
-      squareBeingReplaced.getAttribute("data-id")
-    );
-    const squareBeingDraggedId = parseInt(
-      squareBeingDragged.getAttribute("data-id")
-    );
+  const resetDragStates = useCallback(() => {
+    setSquareBeingDragged(null);
+    setSquareBeingReplaced(null);
+  }, []);
 
-    currentColorArrangement[squareBeingReplacedId] =
-      squareBeingDragged.getAttribute("src");
-    currentColorArrangement[squareBeingDraggedId] =
-      squareBeingReplaced.getAttribute("src");
+  const dragEnd = useCallback(
+    (squareBeingDragged, squareBeingReplaced) => {
+      if (!squareBeingReplaced || !squareBeingDragged) return;
+      const squareBeingReplacedId = parseInt(
+        squareBeingReplaced.getAttribute("data-id")
+      );
+      const squareBeingDraggedId = parseInt(
+        squareBeingDragged.getAttribute("data-id")
+      );
 
-    const validMoves = [
-      squareBeingDraggedId - 1,
-      squareBeingDraggedId - width,
-      squareBeingDraggedId + 1,
-      squareBeingDraggedId + width,
-    ];
-
-    const validMove = validMoves.includes(squareBeingReplacedId);
-
-    const isAColumnOfFour = checkForColumnOfFour();
-    const isARowOfFour = checkForRowOfFour();
-    const isAColumnOfThree = checkForColumnOfThree();
-    const isARowOfThree = checkForRowOfThree();
-
-    if (
-      squareBeingReplacedId &&
-      validMove &&
-      (isARowOfThree || isARowOfFour || isAColumnOfFour || isAColumnOfThree)
-    ) {
-      setSquareBeingDragged(null);
-      setSquareBeingReplaced(null);
-    } else {
       currentColorArrangement[squareBeingReplacedId] =
-        squareBeingReplaced.getAttribute("src");
-      currentColorArrangement[squareBeingDraggedId] =
         squareBeingDragged.getAttribute("src");
-      setCurrentColorArrangement([...currentColorArrangement]);
-    }
-  };
+      currentColorArrangement[squareBeingDraggedId] =
+        squareBeingReplaced.getAttribute("src");
+
+      const validMoves = [
+        squareBeingDraggedId - 1,
+        squareBeingDraggedId - width,
+        squareBeingDraggedId + 1,
+        squareBeingDraggedId + width,
+      ];
+
+      const validMove = validMoves.includes(squareBeingReplacedId);
+
+      const isAColumnOfFour = checkForColumnOfFour();
+      const isARowOfFour = checkForRowOfFour();
+      const isAColumnOfThree = checkForColumnOfThree();
+      const isARowOfThree = checkForRowOfThree();
+
+      // debugger;
+      if (
+        squareBeingReplacedId &&
+        validMove &&
+        (isARowOfThree || isARowOfFour || isAColumnOfFour || isAColumnOfThree)
+      ) {
+        resetDragStates();
+      } else {
+        currentColorArrangement[squareBeingReplacedId] =
+          squareBeingReplaced.getAttribute("src");
+        currentColorArrangement[squareBeingDraggedId] =
+          squareBeingDragged.getAttribute("src");
+        setCurrentColorArrangement([...currentColorArrangement]);
+      }
+    },
+    [
+      checkForColumnOfFour,
+      checkForColumnOfThree,
+      checkForRowOfFour,
+      checkForRowOfThree,
+      currentColorArrangement,
+      resetDragStates,
+    ]
+  );
 
   /** Function which creates the game board by creating 64 (8x8) colors within an array. */
   const createBoard = () => {
@@ -240,11 +257,80 @@ const App = () => {
     currentColorArrangement,
   ]);
 
+  useEffect(() => {
+    if (!squareBeingDragged || !squareBeingReplaced) return;
+    dragEnd(squareBeingDragged, squareBeingReplaced);
+  }, [dragEnd, squareBeingDragged, squareBeingReplaced]);
+
+  const handlers = useSwipeable({
+    onSwipedLeft: (eventData) => {
+      if (
+        ![0, 8, 16, 24, 32, 40, 48, 56].includes(
+          eventData.event.target.dataset.id
+        )
+      ) {
+        let leftElement = document.querySelector(
+          `[data-id="${
+            parseInt(eventData.event.target.getAttribute("data-id")) - 1
+          }"]`
+        );
+        setSquareBeingDragged(eventData.event.target);
+        setSquareBeingReplaced(leftElement);
+      }
+    },
+    onSwipedUp: (eventData) => {
+      if (
+        ![0, 1, 2, 3, 4, 5, 6, 7].includes(eventData.event.target.dataset.id)
+      ) {
+        let topElement = document.querySelector(
+          `[data-id="${
+            parseInt(eventData.event.target.getAttribute("data-id")) - 8
+          }"]`
+        );
+        setSquareBeingDragged(eventData.event.target);
+        setSquareBeingReplaced(topElement);
+      }
+    },
+    onSwipedRight: (eventData) => {
+      if (
+        ![7, 14, 21, 28, 35, 42, 49, 56].includes(
+          eventData.event.target.dataset.id
+        )
+      ) {
+        let rightElement = document.querySelector(
+          `[data-id="${
+            parseInt(eventData.event.target.getAttribute("data-id")) + 1
+          }"]`
+        );
+        setSquareBeingDragged(eventData.event.target);
+        setSquareBeingReplaced(rightElement);
+      }
+    },
+    onSwipedDown: (eventData) => {
+      if (
+        ![56, 57, 58, 59, 60, 61, 62, 63].includes(
+          eventData.event.target.dataset.id
+        )
+      ) {
+        let downElement = document.querySelector(
+          `[data-id="${
+            parseInt(eventData.event.target.getAttribute("data-id")) + 8
+          }"]`
+        );
+        setSquareBeingDragged(eventData.event.target);
+        setSquareBeingReplaced(downElement);
+      }
+    },
+    config: {
+      preventScrollOnSwipe: true,
+    },
+  });
+
   return (
     <div className="app">
       <ScoreBoard score={scoreDisplay} />
       <div className="gameBackground">
-        <div className="game">
+        <div className="game" {...handlers}>
           {currentColorArrangement.map((candyColor, index) => (
             <img
               key={index}
@@ -257,7 +343,7 @@ const App = () => {
               onDragEnter={(e) => e.preventDefault()}
               onDragLeave={(e) => e.preventDefault()}
               onDrop={dragDrop}
-              onDragEnd={dragEnd}
+              onDragEnd={() => dragEnd(squareBeingDragged, squareBeingReplaced)}
             />
           ))}
         </div>
@@ -271,5 +357,7 @@ const App = () => {
     </div>
   );
 };
+
+/** Styles */
 
 export default App;
