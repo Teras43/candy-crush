@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/candy-crush/static/css/main.8c475758.css",
-    "main.js": "/candy-crush/static/js/main.4b5c4b47.js",
+    "main.css": "/candy-crush/static/css/main.93495d5c.css",
+    "main.js": "/candy-crush/static/js/main.ad87f798.js",
     "static/media/ice-cream-bkgd.jpg": "/candy-crush/static/media/ice-cream-bkgd.92520498e247c2281c6a.jpg",
     "static/media/red-swirls.png": "/candy-crush/static/media/red-swirls.ea0ac7b27d4affa1aa6c.png",
     "static/media/purple-candy.png": "/candy-crush/static/media/purple-candy.ae25b8a55e061a50346f.png",
@@ -12,11 +12,11 @@
     "static/media/green-candy.png": "/candy-crush/static/media/green-candy.599f70161bdb3cadac66.png",
     "static/media/blank.png": "/candy-crush/static/media/blank.fbcb91799ceba75b2e3a.png",
     "index.html": "/candy-crush/index.html",
-    "main.8c475758.css.map": "/candy-crush/static/css/main.8c475758.css.map",
-    "main.4b5c4b47.js.map": "/candy-crush/static/js/main.4b5c4b47.js.map"
+    "main.93495d5c.css.map": "/candy-crush/static/css/main.93495d5c.css.map",
+    "main.ad87f798.js.map": "/candy-crush/static/js/main.ad87f798.js.map"
   },
   "entrypoints": [
-    "static/css/main.8c475758.css",
-    "static/js/main.4b5c4b47.js"
+    "static/css/main.93495d5c.css",
+    "static/js/main.ad87f798.js"
   ]
 }
