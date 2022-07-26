@@ -328,24 +328,35 @@ const App = () => {
 
   return (
     <div className="app">
-      <ScoreBoard score={scoreDisplay} />
-      <div className="gameBackground">
-        <div className="game" {...handlers}>
-          {currentColorArrangement.map((candyColor, index) => (
-            <img
-              key={index}
-              src={candyColor}
-              alt={candyColor}
-              data-id={index}
-              draggable={true}
-              onDragStart={dragStart}
-              onDragOver={(e) => e.preventDefault()}
-              onDragEnter={(e) => e.preventDefault()}
-              onDragLeave={(e) => e.preventDefault()}
-              onDrop={dragDrop}
-              onDragEnd={() => dragEnd(squareBeingDragged, squareBeingReplaced)}
-            />
-          ))}
+      <div className="pageContainer">
+        <ScoreBoard score={scoreDisplay} />
+        <div className="gameAndInstructionsContainer">
+          {window.innerWidth > 1000 && (
+            <div className="gameInstructions">
+              <h2>Drag and drop the candy to match!</h2>
+            </div>
+          )}
+          <div className="gameBackground">
+            <div className="game" {...handlers}>
+              {currentColorArrangement.map((candyColor, index) => (
+                <img
+                  key={index}
+                  src={candyColor}
+                  alt={candyColor}
+                  data-id={index}
+                  draggable={true}
+                  onDragStart={dragStart}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDragEnter={(e) => e.preventDefault()}
+                  onDragLeave={(e) => e.preventDefault()}
+                  onDrop={dragDrop}
+                  onDragEnd={() =>
+                    dragEnd(squareBeingDragged, squareBeingReplaced)
+                  }
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
       {scoreDisplay >= 150 && (

@@ -10,12 +10,18 @@ body {
   height: 100vh;
   width: 100vw;
   box-sizing: border-box;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background-image: url(./images/red-swirls.png);
-  /* background-size: cover; */
-  /* background-repeat: no-repeat; */
   background-repeat: repeat;
+}
+
+.pageContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 75%;
+  margin: 0 auto;
 }
 
 .gameBackground {
@@ -24,8 +30,6 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 8px;
-  margin-left: 130px;
-  margin-right: 300px;
 }
 
 .game {
@@ -112,6 +116,26 @@ body {
   z-index: 10;
 }
 
+.gameAndInstructionsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gameInstructions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 8px solid transparent;
+  background-color: rgb(236, 236, 248);
+  border-image: repeating-linear-gradient(45deg, rgb(55, 91, 249), rgb(145, 165, 255) 10px, rgb(249, 59, 59) 10px, rgb(255, 180, 246) 20px);
+  border-image-slice: 1;
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+  color: rgb(249, 59, 59);
+  margin-bottom: 20px;
+}
+
 @media only screen and (min-width: 1001px) {
   .gameBackground {
     margin-right: 30px;
@@ -120,6 +144,10 @@ body {
 
 @media only screen and (max-width: 1000px) {
   .app {
+    flex-direction: column;
+  }
+
+  .pageContainer {
     flex-direction: column;
   }
 
@@ -153,7 +181,7 @@ body {
   }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 601px) {
   .game {
     display: flex;
     height: 480px;
